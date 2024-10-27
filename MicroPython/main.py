@@ -6,6 +6,7 @@ This module is a Micro:bit MicroPython programThis program mauseres the disance 
 
 from microbit import *
 import neopixel
+# import sonar
 
 # Added the sonar libray
 class HCSR04:
@@ -47,32 +48,33 @@ class HCSR04:
 
 
 # Setting the varibles 
-sonar = HCSR04
-distance = neopixel.NeoPixel(pin16, 4)
+sonar = HCSR04()
+leds = neopixel.NeoPixel(pin16, 4)
 
 # Setting the screen
 display.clear()
 display.show(Image.HAPPY)
 
 # Setting up the lights 
-distance[0] = (0, 0, 0)
-distance[1] = (0, 0, 0)
-distance[2] = (0, 0, 0)
-distance[3]  =(0, 0, 0)
-distance.show()
+leds[0] = (0, 0, 0)
+leds[1] = (0, 0, 0)
+leds[2] = (0, 0, 0)
+leds[3]  =(0, 0, 0)
+leds.show()
+
+# Loop
 while True:
-    display.show(Image.HEART)
-    display.show(sonar.distance_mm()/10)
-     
+    
     if button_a.is_pressed():
-        if sonar < 10:
-            distance[0] = (255, 0, 0)
-            distance[1] = (255, 0, 0)
-            distance[2] = (255, 0, 0)
-            distance[3] = (255, 0, 0)
+        distance = sonar.distance_mm()/10 
+        if distance < 10:
+            leds[0] = (255, 0, 0)
+            leds[1] = (255, 0, 0)
+            leds[2] = (255, 0, 0)
+            leds[3] = (255, 0, 0)
         else:
-            distance[0] = (255, 110, 0)
-            distance[1] = (255, 110, 0)
-            distance[2] = (255, 110, 0)
-            distance[3] = (255, 110, 0)
-        distance.show()
+            leds[0] = (0, 110, 0)
+            leds[1] = (0, 110, 0)
+            leds[2] = (0, 110, 0)
+            leds[3] = (0, 110, 0)
+        leds.show()
